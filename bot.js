@@ -40,33 +40,39 @@ client.on('message', async message => {
     }
     if(message.body.includes("#askirwin")) {
         if(checkPrompt(message.body)){
-            client.isRegisteredUser(message.author).then(function(isRegistered) {
-                if(isRegistered) {
-                    client.sendMessage(message.author, NOT_ALLOWED_MESSAGE);
-                }
-            })
+            essage.reply(NOT_ALLOWED_MESSAGE)
+            // client.isRegisteredUser(message.author).then(function(isRegistered) {
+            //     if(isRegistered) {
+            //         client.sendMessage(message.author, NOT_ALLOWED_MESSAGE);
+            //         // message.reply(NOT_ALLOWED_MESSAGE)
+            //     }
+            // })
             return 
         }
         let isContactExists = await getUser(number);
 
         if(isContactExists.status) {
             if(isContactExists.user.usage >= USER_LIMIT) {
-                client.isRegisteredUser(message.author).then(function(isRegistered) {
-                    if(isRegistered) {
-                        client.sendMessage(message.author, USER_LIMIT_MESSAGE);
-                    }
-                })
+                // client.isRegisteredUser(message.author).then(function(isRegistered) {
+                //     if(isRegistered) {
+                //         client.sendMessage(message.author, USER_LIMIT_MESSAGE);
+                //         // message.reply(USER_LIMIT_MESSAGE)
+                //     }
+                // })
+                message.reply(USER_LIMIT_MESSAGE)
                 
             } else {
                 dailyLimitCount++;
                 addUsageForUser(number, isContactExists.user.usage+1)
                 let response  =  await completion(message.body)
                 // let MESSAGE_TO_SEND = response
-                client.isRegisteredUser(message.author).then(function(isRegistered) {
-                    if(isRegistered) {
-                        client.sendMessage(message.author, response);
-                    }
-                })
+                // client.isRegisteredUser(message.author).then(function(isRegistered) {
+                //     if(isRegistered) {
+                //         client.sendMessage(message.author, response);
+                //         // message.reply(response)
+                //     }
+                // })
+                message.reply(response)
                 
             }
         } else {
@@ -81,11 +87,13 @@ client.on('message', async message => {
              })
              let response  =  await completion(message.body)
              let MESSAGE_TO_SEND = `${response} ${ENDING_TEXT}`
-            client.isRegisteredUser(message.author).then(function(isRegistered) {
-                if(isRegistered) {
-                    client.sendMessage(message.author, response);
-                }
-            }) 
+            // client.isRegisteredUser(message.author).then(function(isRegistered) {
+            //     if(isRegistered) {
+            //         client.sendMessage(message.author, response);
+            //         // message.reply(response)
+            //     }
+            // }) 
+            message.reply(response)
         }
     }
 });
